@@ -1,21 +1,23 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import helloWorld from "../utils/api";
-import { names } from "../utils/options";
+import { systems } from "../utils/options";
 
 export default class Systems extends React.Component<
-  undefined,
+  { match: { params: { name: String } } },
   { text: String }
 > {
   state = {
     text: ""
   };
   render() {
+    console.log(this.props);
     const { name } = this.props.match.params;
+    console.log(name);
     return (
       <div>
         <h2>{name + " Systems"}</h2>
-        {names.map((elm, i) => (
+        {systems(name).map((elm, i) => (
           <Link to={"/Transactions/" + elm} key={i}>
             <button>{elm}</button>
           </Link>
@@ -27,6 +29,9 @@ export default class Systems extends React.Component<
         >
           push this
         </button>
+        <Link to={"/"}>
+          <button>Back</button>
+        </Link>
         <p>{this.state.text}</p>
       </div>
     );

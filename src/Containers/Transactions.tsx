@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import helloWorld from "../utils/api";
 import { transaction_info } from "../utils/options";
 
@@ -11,14 +12,15 @@ export default class Transactions extends React.Component<
   };
   render() {
     const { name } = this.props.match.params;
+    console.log(name);
     return (
       <div>
         <h2>{name + " Transactions"}</h2>
-        {transaction_info(this.props.match.params.name).map((elm, i) => (
+        {/* {transaction_info("DollarCity", "ECC").map((elm, i) => (
           <div key={i}>
             <button>{elm}</button>
           </div>
-        ))}
+        ))} */}
         <button
           onClick={async () => {
             this.setState({ text: await helloWorld() });
@@ -26,6 +28,9 @@ export default class Transactions extends React.Component<
         >
           push this
         </button>
+        <Link to={"/Systems/" + name}>
+          <button>Back</button>
+        </Link>
         <p>{this.state.text}</p>
       </div>
     );

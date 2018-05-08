@@ -1,24 +1,29 @@
 import * as React from "react";
 import { HashRouter, Route } from "react-router-dom";
+import { Provider, applyMiddleware, createStore } from "react-redux";
 
-import Welcome from "./Containers/Welcome";
-import Systems from "./Containers/Systems";
-import Transactions from "./Containers/Transactions";
+import reducers from "./State/Reducers";
+import Routes from "./Routes";
+import thunkMiddleware = require("redux-thunk");
+
+const store = createStore(reducers, {}, applyMiddleware(thunkMiddleware));
 
 export class App extends React.Component<undefined, undefined> {
   render() {
     return (
-      <HashRouter>
-        <Routes />
-      </HashRouter>
+      <Provider store={store}>
+        <HashRouter>
+          <Routes />
+        </HashRouter>
+      </Provider>
     );
   }
 }
 
-const Routes = () => (
-  <div>
-    <Route exact path="/" component={Welcome} />
-    <Route exact path="/Systems/:name" component={Systems} />
-    <Route exact path="/Transactions/:name" component={Transactions} />
-  </div>
-);
+// const Routes = () => (
+//   <div>
+//     <Route exact path="/" component={Welcome} />
+//     <Route exact path="/Systems/:name" component={Systems} />
+//     <Route exact path="/Transactions/:name" component={Transactions} />
+//   </div>
+// );
